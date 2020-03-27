@@ -30,6 +30,7 @@ export default function Home() {
     false,
   );
 
+  /* TODO: Debug the reason behind this error */
   console.log(error);
 
   const list = response && response.data && response.data.list ? response.data.list : [];
