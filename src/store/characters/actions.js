@@ -38,7 +38,26 @@ export const getCharacters = () => {
       console.log('Error in get characters', error);
       return formatApiErrorResponse({
         response: error.response,
-        message: 'Erro. Atualize a página',
+        message: 'Fail to load character list',
+      });
+    }
+  };
+};
+
+export const getCharactersById = (id) => {
+  return async (dispatch) => {
+    dispatch(loadingCharacters());
+    try {
+      const response = await new Characters().getById(id);
+      if (response) {
+        dispatch(receiveCharacters(response.data));
+      }
+      return response;
+    } catch (error) {
+      console.log('Error in get characters', error);
+      return formatApiErrorResponse({
+        response: error.response,
+        message: 'Fail do load character profile',
       });
     }
   };

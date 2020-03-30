@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
@@ -21,10 +20,6 @@ const getListTotalPages = (list) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(4, 0, 4),
-  },
   root: {
     '& > *': {
       marginTop: theme.spacing(2),
@@ -52,22 +47,19 @@ export default function Home() {
   const classes = useStyles();
 
   return (
-    <main>
-      <div className={classes.heroContent}>
-        <CharactersCardList list={getPaginatedList(list, page)} />
-        <Container className={classes.grid} maxWidth="md">
-          <Grid container spacing={4}>
-            <div className={classes.root}>
-              <Pagination
-                page={page}
-                count={getListTotalPages(list)}
-                onChange={(e, n) => setPage(parseInt(n))}
-              />
-            </div>
-          </Grid>
-        </Container>
-      </div>
-      <Box pt={4}></Box>
-    </main>
+    <>
+      <CharactersCardList list={getPaginatedList(list, page)} />
+      <Container className={classes.grid} maxWidth="md">
+        <Grid container spacing={4}>
+          <div className={classes.root}>
+            <Pagination
+              page={page}
+              count={getListTotalPages(list)}
+              onChange={(e, n) => setPage(parseInt(n))}
+            />
+          </div>
+        </Grid>
+      </Container>
+    </>
   );
 }
