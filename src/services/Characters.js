@@ -13,7 +13,7 @@ export default class {
 
   getById = (id) =>
     this.instance({
-      url: `/characters?${id}`,
+      url: `/characters/${id}`,
       method: 'GET',
     });
 }
