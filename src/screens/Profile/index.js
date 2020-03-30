@@ -3,19 +3,18 @@ import { withRouter } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { useApiRequest } from '../../hooks';
 import CharactersService from '../../services/Characters';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    paddingTop: theme.spacing(12),
-    paddingBottom: theme.spacing(12),
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
   },
   card: {
     minHeight: '900px',
@@ -36,21 +35,19 @@ function Profile({ match }) {
   const [isLoaded, response, error] = useApiRequest(
     { Service: CharactersService, action: 'getById' },
     characterId,
-    'Failure to fetch data',
+    'Failed to fetch data',
     false,
   );
 
   const character = response && response.data ? response.data[0] : {};
 
-  console.log(character);
-
   const classes = useStyles();
-
-  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <Container maxWidth="md" className={classes.container}>
-      {isLoaded && (
+      {error ? (
+        error
+      ) : isLoaded ? (
         <Card className={classes.card}>
           <CardMedia className={classes.cardMedia} image={character.img} title={character.name} />
           <div className={classes.cardDetails}>
@@ -79,6 +76,8 @@ function Profile({ match }) {
             </CardContent>
           </div>
         </Card>
+      ) : (
+        <CircularProgress />
       )}
     </Container>
   );

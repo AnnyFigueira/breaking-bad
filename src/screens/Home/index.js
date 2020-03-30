@@ -38,7 +38,7 @@ export default function Home() {
   const [isLoaded, response, error] = useApiRequest(
     { Service: CharactersService, action: 'getAll' },
     null,
-    'Failure to fetch data',
+    'Failed to fetch data',
     false,
   );
 
@@ -48,7 +48,7 @@ export default function Home() {
 
   return (
     <>
-      <CharactersCardList list={getPaginatedList(list, page)} />
+      <CharactersCardList list={getPaginatedList(list, page)} loading={!isLoaded} error={error} />
       <Container className={classes.grid} maxWidth="md">
         <Grid container spacing={4}>
           <div className={classes.root}>

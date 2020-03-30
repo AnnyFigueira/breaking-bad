@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
@@ -29,13 +30,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CharactersCardList({ history, list }) {
+function CharactersCardList({ history, list, loading, error }) {
   const classes = useStyles();
 
   return (
     <Container className={classes.cardGrid} maxWidth="md">
       <Grid container spacing={4}>
-        {list.length > 0 &&
+        {loading ? (
+          <CircularProgress />
+        ) : error ? (
+          error
+        ) : (
           list.map((c) => (
             <Grid item key={c.char_id} xs={12} sm={6} md={4}>
               <Card className={classes.card}>
@@ -53,7 +58,8 @@ function CharactersCardList({ history, list }) {
                 </CardActions>
               </Card>
             </Grid>
-          ))}
+          ))
+        )}
       </Grid>
     </Container>
   );
