@@ -21,11 +21,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
   },
-  fixedHeight: {
-    height: 240,
-  },
   cardMedia: {
     width: '50%',
+  },
+  label: {
+    fontWeight: 'bold',
+  },
+  infoBlock: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -55,24 +58,31 @@ function Profile({ match }) {
               <Typography component="h1" variant="h5">
                 {character.name}
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                Nickname: {character.nickname}
+              <Typography variant="h6" color="textSecondary">
+                {character.nickname}
               </Typography>
-              <Typography variant="subtitle1" paragraph>
-                Occupation:
-                {character.occupation.map((occupation, index) =>
-                  index === 0 ? occupation : ', ' + occupation,
-                )}
-              </Typography>
-              <Typography variant="subtitle1" paragraph>
-                Breaking bad seasons:
-                {character.appearance.map((appearance, index) =>
-                  index === 0 ? appearance : ', ' + appearance,
-                )}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                Status: {character.status}
-              </Typography>
+              <div className={classes.infoBlock}>
+                <Typography variant="subtitle1" paragraph>
+                  <span className={classes.label}>Birthday: </span>
+                  {character.birthday}
+                </Typography>
+                <Typography variant="subtitle1" paragraph>
+                  <span className={classes.label}>Occupation: </span>
+                  {character.occupation.map((occupation, index) =>
+                    index === 0 ? occupation : ', ' + occupation,
+                  )}
+                </Typography>
+                <Typography variant="subtitle1" paragraph>
+                  <span className={classes.label}>Breaking bad seasons: </span>
+                  {character.appearance.map((appearance, index) =>
+                    index === 0 ? appearance : ', ' + appearance,
+                  )}
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  <span className={classes.label}>Status: </span>
+                  {character.status}
+                </Typography>
+              </div>
             </CardContent>
           </div>
         </Card>

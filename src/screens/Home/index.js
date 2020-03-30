@@ -19,6 +19,7 @@ const getListTotalPages = (list) => {
   return list.length < SHOW_ITEMS ? 1 : Math.round(list.length / SHOW_ITEMS);
 };
 
+/* TODO: export all styles to external files */
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
