@@ -11,6 +11,7 @@ export const useApiRequest = (apiRequest, params = null, defaultErrMessage, sear
       setResponse(res);
       setIsLoaded(true);
     } catch (err) {
+      console.log(err);
       const errorMessage =
         err.response && err.response.data && err.response.data.message
           ? err.response.data.message

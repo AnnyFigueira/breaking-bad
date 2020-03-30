@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default (endpoint = 'https://www.breakingbadapi.com/api') => {
+export default (endpoint = 'https://www.breakingbadapi.com/api/') => {
   let headers = { 'Content-Type': 'application/json' };
 
   const instance = axios.create({

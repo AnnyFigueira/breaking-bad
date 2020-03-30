@@ -3,12 +3,12 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
-
+import { makeStyles } from '@material-ui/core/styles';
 import { useApiRequest } from '../../hooks';
 import CharactersService from '../../services/Characters';
 import CharactersCardList from '../../components/CharactersCardList';
 
-const SHOW_ITEMS = 20;
+const SHOW_ITEMS = 21;
 
 const getPaginatedList = (list, currPage = 1) => {
   const startPos = currPage === 1 ? 0 : SHOW_ITEMS * (currPage - 1);
@@ -20,33 +20,54 @@ const getListTotalPages = (list) => {
   return list.length < SHOW_ITEMS ? 1 : Math.round(list.length / SHOW_ITEMS);
 };
 
+const useStyles = makeStyles((theme) => ({
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(4, 0, 4),
+  },
+  root: {
+    '& > *': {
+      marginTop: theme.spacing(2),
+    },
+    margin: '0 auto',
+  },
+  grid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+}));
+
 export default function Home() {
   const [page, setPage] = useState(1);
 
   const [isLoaded, response, error] = useApiRequest(
-    { Service: CharactersService, action: 'getCharacters' },
+    { Service: CharactersService, action: 'getAll' },
     null,
     'Failure to fetch data',
     false,
   );
 
-  /* TODO: Debug the reason behind this error */
-  console.log(error);
+  const list = response && response.data ? response.data : [];
 
-  const list = response && response.data && response.data.list ? response.data.list : [];
+  const classes = useStyles();
 
   return (
-    <main className="">
-      <div className="" />
-      <Container maxWidth="lg" className="">
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <CharactersCardList list={getPaginatedList(list, page)} />
+    <main>
+      <div className={classes.heroContent}>
+        <CharactersCardList list={getPaginatedList(list, page)} />
+        <Container className={classes.grid} maxWidth="md">
+          <Grid container spacing={4}>
+            <div className={classes.root}>
+              <Pagination
+                page={page}
+                count={getListTotalPages(list)}
+                onChange={(e, n) => setPage(parseInt(n))}
+              />
+            </div>
           </Grid>
-        </Grid>
-        <Pagination page={page} />
-        <Box pt={4}></Box>
-      </Container>
+        </Container>
+      </div>
+      <Box pt={4}></Box>
     </main>
   );
 }
