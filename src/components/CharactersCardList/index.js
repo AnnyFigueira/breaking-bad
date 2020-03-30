@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -28,14 +29,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CharactersCardList(list) {
+function CharactersCardList({ history, list }) {
   const classes = useStyles();
 
   return (
     <Container className={classes.cardGrid} maxWidth="md">
       <Grid container spacing={4}>
-        {list.list.length > 0 &&
-          list.list.map((c) => (
+        {list.length > 0 &&
+          list.map((c) => (
             <Grid item key={c.char_id} xs={12} sm={6} md={4}>
               <Card className={classes.card}>
                 <CardMedia className={classes.cardMedia} image={c.img} title={c.name} />
@@ -46,7 +47,9 @@ export default function CharactersCardList(list) {
                   <Typography color="textSecondary">{c.nickname}</Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">Details</Button>
+                  <Button size="small" onClick={() => history.push(`/profile/${c.char_id}`)}>
+                    Details
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
@@ -55,3 +58,5 @@ export default function CharactersCardList(list) {
     </Container>
   );
 }
+
+export default withRouter(CharactersCardList);
